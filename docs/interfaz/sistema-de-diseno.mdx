@@ -1,0 +1,168 @@
+---
+title: Sistema de diseño
+description: Tokens del Billy Design System (src/ui/theme.ts) - color, tipografía, espaciado, radios, elevación y movimiento.
+sidebar_label: Sistema de diseño
+---
+
+import {Swatches, Badge} from '@site/src/components/Billy';
+
+`src/ui/theme.ts` es la **única fuente de verdad** visual: "las pantallas nunca usan valores sueltos". Se importa desde `src/ui` (`import { colors, radius } from "../src/ui"`). Esta documentación usa los mismos tokens (ver [Esta documentación](#esta-documentacion)).
+
+## Principios
+
+Extraídos de los comentarios del código:
+
+- **Violeta Oblicua sólo para acción, selección y estado activo.** No se usa como decoración.
+- **Plano:** cards y listas llevan borde, no sombra; la sombra se reserva para overlays (toast, bottom sheet).
+- **Semánticos siempre con texto o ícono**, nunca sólo color.
+- **Contraste documentado:** `textSecondary` 7,0:1 y `textTertiary` 4,7:1 sobre blanco.
+- **Target táctil mínimo de 44 pt** (`layout.hitSlop`), con `hitSlop` en controles pequeños.
+- **Una card por lista, no por fila** (`ListGroup`).
+
+## Color
+
+### Marca
+
+<Swatches
+  items={[
+    {token: 'primary', value: '#6D58FF', note: 'Acción principal, tab activa'},
+    {token: 'primaryPressed', value: '#5A45EC', note: 'Botón primario presionado'},
+    {token: 'primaryStrong', value: '#4B36D6', note: 'Links y texto sobre tint'},
+    {token: 'primarySoft', value: '#F1EEFF', note: 'Fondos tonales, avatar'},
+    {token: 'primaryBorder', value: '#DCD5FF'},
+  ]}
+/>
+
+### Texto y superficies
+
+<Swatches
+  items={[
+    {token: 'text', value: '#14151F'},
+    {token: 'textSecondary', value: '#545869', note: '7,0:1 sobre blanco'},
+    {token: 'textTertiary', value: '#6E7387', note: '4,7:1 — metadata, placeholders'},
+    {token: 'textInverse', value: '#FFFFFF'},
+    {token: 'background', value: '#F6F6F9', note: 'Fondo de pantalla'},
+    {token: 'surface', value: '#FFFFFF', note: 'Cards, listas, inputs'},
+    {token: 'surfaceMuted', value: '#F0F0F5', note: 'Presionado, skeleton, búsqueda'},
+    {token: 'border', value: '#E5E5EE'},
+    {token: 'borderStrong', value: '#D2D3DE', note: 'Bordes de inputs y chips'},
+    {token: 'overlay', value: 'rgba(20, 21, 31, 0.40)', note: 'Fondo de sheets'},
+  ]}
+/>
+
+### Semánticos
+
+<Swatches
+  items={[
+    {token: 'success', value: '#12805A'},
+    {token: 'successSoft', value: '#E6F5EE'},
+    {token: 'warning', value: '#A65A00'},
+    {token: 'warningSoft', value: '#FFF2DF'},
+    {token: 'danger', value: '#D03535'},
+    {token: 'dangerSoft', value: '#FDECEC'},
+    {token: 'info', value: '#2459D6'},
+    {token: 'infoSoft', value: '#EAF0FD'},
+  ]}
+/>
+
+Los tonos se combinan en `toneColors` (`src/ui/Badge.tsx`), usado por `Badge`, `IconTile`, `EmptyState` y `Banner`:
+
+<p>
+  <Badge>neutral</Badge> <Badge tone="primary">primary</Badge> <Badge tone="success" dot>success</Badge>{' '}
+  <Badge tone="warning" dot>warning</Badge> <Badge tone="danger" dot>danger</Badge> <Badge tone="info">info</Badge>
+</p>
+
+Convención de `Badge`: **con punto** = estado vivo (activo, en mora); **sin punto** = categoría (etapa).
+
+## Tipografía
+
+Familia **Plus Jakarta Sans** en cuatro pesos (`fonts.regular` 400, `medium` 500, `semibold` 600, `bold` 700). El texto respeta el tamaño de fuente del sistema hasta ×1,4 (`maxFontSizeMultiplier`).
+
+| Variante | Peso | Tamaño / interlineado | Tracking | Uso |
+|---|---|---|---|---|
+| `display` | 700 | 32 / 38 | −0,6 | Reservada |
+| `title1` | 700 | 26 / 32 | −0,4 | Títulos de pantalla, saludo |
+| `title2` | 700 | 20 / 26 | −0,2 | Títulos de sheet, nombre en detalle |
+| `title3` | 600 | 17 / 22 | — | Header de navegación, secciones |
+| `bodyStrong` | 600 | 15 / 22 | — | Títulos de fila, botones |
+| `body` | 400 | 15 / 22 | — | Texto general (variante por defecto) |
+| `callout` | 500 | 14 / 20 | — | Texto secundario |
+| `calloutStrong` | 600 | 14 / 20 | — | Etiquetas de campos, links |
+| `caption` | 500 | 13 / 18 | — | Metadata, ayudas |
+| `overline` | 600 | 12 / 16 | +0,6, mayúsculas | Títulos de `ListGroup` |
+| `amount` | 700 | 34 / 40 | −0,8, cifras tabulares | Saldo, monto de factura |
+
+Los importes usan `tabular` (`fontVariant: ["tabular-nums"]`) para alinear cifras.
+
+## Espaciado y layout
+
+Escala de 4 pt (`space`):
+
+| Token | `xxs` | `xs` | `sm` | `md` | `lg` | `xl` | `xxl` | `xxxl` | `huge` |
+|---|---|---|---|---|---|---|---|---|---|
+| px | 4 | 8 | 12 | 16 | 20 | 24 | 32 | 40 | 48 |
+
+| `layout` | Valor | Uso |
+|---|---|---|
+| `gutter` | 20 | Margen horizontal de pantalla |
+| `sectionGap` | 24 | Separación entre bloques de `Screen` |
+| `hitSlop` | 44 | Target táctil mínimo |
+| `controlHeight` | `lg` 52 · `md` 44 · `sm` 36 | Botones e inputs |
+
+## Radios
+
+| Token | px | Uso |
+|---|---|---|
+| `sm` | 8 | Skeleton |
+| `md` | 12 | Inputs, búsqueda, icon tiles, toggle chips |
+| `control` | 14 | Botones, toast, banner |
+| `lg` | 16 | Cards y grupos de lista |
+| `xl` | 24 | Bordes superiores de bottom sheets |
+| `full` | 999 | Badges, chips, avatares, icon buttons |
+
+La tarjeta de saldo de Inicio usa 20 px, fuera de la escala.
+
+## Íconos
+
+`lucide-react-native` en todas las pantallas. Tamaños `iconSize` `sm` 16 · `md` 20 · `lg` 24; trazo `iconStroke.regular` 1,75 e `iconStroke.active` 2 (tabs activas, botones).
+
+## Elevación
+
+| Token | iOS | Android | Uso |
+|---|---|---|---|
+| `flat` | — | — | Cards y listas (llevan borde) |
+| `raised` | sombra 6 %, radio 8, y 2 | `elevation: 2` | Definido, sin uso en pantallas |
+| `overlay` | sombra 14 %, radio 24, y 12 | `elevation: 12` | Toast y bottom sheet |
+
+## Movimiento
+
+| Token | ms | Uso |
+|---|---|---|
+| `press` | 120 | Escala al presionar (`PressableScale`, 0,98 por defecto) |
+| `toast` | 200 | Entrada/salida del toast |
+| `sheet` | 260 | Cierre del sheet (×0,7); la apertura es un *spring* |
+| `toastDuration` | 3000 | Tiempo visible del toast |
+
+Además: skeletons que pulsan entre 55 % y 100 % de opacidad (700 ms) y acordeones de FAQ con `LayoutAnimation` de 200 ms. La app no consulta la preferencia de "reducir movimiento" del sistema.
+
+## Modo oscuro
+
+No existe en la app: `userInterfaceStyle: "light"` y `StatusBar style="dark"`.
+
+## Marca
+
+- `BrandMark` (`src/components/BrandMark.tsx`): isotipo blanco de Oblicua (`assets/images/logo-mark.png`) sobre un tile `primary` de radio 16.
+- Ícono de app y notificación: `assets/icon.png` ("O" violeta de Oblicua sobre blanco).
+- Material de tiendas en `assets/store/` (ver [Builds y publicación](../despliegue/builds-y-publicacion.md#material-de-tiendas)).
+
+## Implementación de animaciones
+
+Los `Animated.Value` se crean una sola vez con `useState(() => new Animated.Value(x))[0]` (`PressableScale`, `Skeleton`, `Sheet`, `Toast`), no con `useRef(...).current`, para cumplir la regla `react-hooks/refs`.
+
+## Sistema anterior
+
+El sistema de clases `obst()` (`src/styles`) y sus componentes, con otra paleta (`#362A89`, `#2B3044`, `#F04949`), se eliminaron en el commit `08c3da9`: ninguna pantalla los usaba.
+
+## Esta documentación {/* #esta-documentacion */}
+
+El sitio Docusaurus replica estos tokens en `src/css/custom.css`: mismos colores (`--billy-*`), Plus Jakarta Sans, radios 8/12/14/16/24, superficies planas con borde, badges con los tonos de `toneColors`, botones de 52 px de alto y el logotipo sobre tile violeta como `BrandMark`. Como la app sólo tiene modo claro, el modo oscuro del sitio deriva de la misma paleta: fondo basado en `text` (#14151F) y violetas claros #9C8CFF / #B5A9FF tomados del material de marca.

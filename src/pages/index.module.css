@@ -1,0 +1,210 @@
+.main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 48px 20px 72px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 48px;
+}
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--billy-primary-strong);
+}
+.title {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+.title span {
+  color: var(--billy-primary);
+}
+.lead {
+  margin: 20px 0 0;
+  max-width: 560px;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: var(--billy-text-secondary);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 22px;
+  border-radius: var(--billy-radius-control);
+  font-weight: 600;
+  font-size: 16px;
+  border: 1px solid transparent;
+  transition: background-color 120ms ease, transform 120ms ease;
+}
+.primary {
+  background: #6d58ff;
+  color: #fff;
+}
+.primary:hover {
+  background: #5a45ec;
+  color: #fff;
+  text-decoration: none;
+}
+.secondary {
+  background: var(--billy-surface);
+  color: var(--billy-text);
+  border-color: var(--billy-border-strong);
+}
+.secondary:hover {
+  background: var(--billy-surface-muted);
+  color: var(--billy-text);
+  text-decoration: none;
+}
+.primary:active,
+.secondary:active {
+  transform: scale(0.98);
+}
+
+.phone {
+  width: 250px;
+  padding: 8px;
+  border-radius: 36px;
+  background: linear-gradient(160deg, #2b2b33 0%, #0c0c0f 70%);
+  box-shadow: 0 30px 60px rgba(75, 54, 214, 0.28);
+  transform: rotate(4deg);
+}
+.phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 28px;
+}
+
+/* ---------- Tarjeta tipo "Saldo disponible" ---------- */
+.balance {
+  background: #6d58ff;
+  color: #fff;
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.balanceHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+}
+.pill {
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #f0f0f5;
+  color: #14151f;
+  font-size: 13px;
+  font-weight: 600;
+}
+.stack {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 0;
+}
+.stack dt {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+}
+.stack dd {
+  margin: 2px 0 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Secciones ---------- */
+.sectionTitle {
+  font-size: 1.4rem;
+  margin-bottom: 16px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px;
+  background: var(--billy-surface);
+  border: 1px solid var(--billy-border);
+  border-radius: var(--billy-radius-lg);
+  color: var(--billy-text);
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+.card:hover {
+  border-color: var(--billy-primary-border);
+  text-decoration: none;
+  color: var(--billy-text);
+}
+.cardEyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--billy-text-tertiary);
+}
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.cardText {
+  font-size: 0.92rem;
+  color: var(--billy-text-secondary);
+  line-height: 1.5;
+}
+
+@media (max-width: 996px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .phone {
+    display: none;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stack {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .main {
+    padding: 32px 16px 56px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
