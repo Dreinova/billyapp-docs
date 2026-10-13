@@ -14,8 +14,8 @@ const config: Config = {
   },
 
   // Ajustar cuando la documentación se publique en un dominio real.
-  url: 'http://localhost:3000',
-  baseUrl: '/',
+  url: 'https://dreinova.github.io',
+  baseUrl: '/billyapp-docs/',
 
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
