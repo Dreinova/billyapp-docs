@@ -13,9 +13,12 @@ const config: Config = {
     v4: true,
   },
 
-  // Ajustar cuando la documentación se publique en un dominio real.
+  // Publicado como GitHub Pages de proyecto (.github/workflows/deploy.yml):
+  // sirve bajo /billyapp-docs/, no en la raíz del dominio.
   url: 'https://dreinova.github.io',
   baseUrl: '/billyapp-docs/',
+  organizationName: 'Dreinova',
+  projectName: 'billyapp-docs',
 
   onBrokenLinks: 'throw',
   onBrokenAnchors: 'throw',
