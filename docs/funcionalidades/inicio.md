@@ -34,7 +34,7 @@ Tres peticiones en paralelo dentro de un único `useQuery`:
 
 `balance` se toma de `profile.balance`, luego `user.balance`, y si no es numérico vale 0 (en el backend es un `string`). El nombre del plan aparece como píldora. **Recargar** abre [`/planes`](./cuenta-y-plan.md#recarga).
 
-:::caution Saldo ambiguo
+:::caution[Saldo ambiguo]
 La web muestra aquí `balance − total de records`, y la app muestra `balance`. Ninguno es un saldo calculado por el backend ([detalle](./cuenta-y-plan.md#saldo)).
 :::
 

@@ -13,7 +13,7 @@ npm test            # jest (preset jest-expo)
 npm run check       # los tres en orden
 ```
 
-Estado al 13/10/2026: **tipos sin errores, 46 pruebas en verde, ESLint con 0 errores y 8 avisos.** No hay CI que lo ejecute ([Pendientes](./pendientes.md#publicacion)).
+Estado al 13/10/2026: **tipos sin errores, 59 pruebas en verde, ESLint con 0 errores y 8 avisos.** No hay CI que lo ejecute ([Pendientes](./pendientes.md#publicacion)).
 
 ## Pruebas unitarias
 
@@ -22,7 +22,8 @@ Jest con `jest-expo`. `jest.global-setup.js` fija `TZ=America/Bogota`, porque lo
 | Archivo | Cubre |
 |---|---|
 | `src/utils/__tests__/format.test.ts` | `parseDate` y fechas `date` en UTC−5 (regresión), fechas relativas, `daysUntil` (sin `-0`), moneda `es-CO`, iniciales, búsqueda sin tildes, validación de correo |
-| `src/utils/__tests__/domain.test.ts` | `dueLabel` (vence hoy = "Vence") y `creditState` (Agotado / Vencido / Por vencer / Activo) |
+| `src/utils/__tests__/domain.test.ts` | `dueLabel` (vence hoy = "Vence"); `creditState`/`availableOf` (Agotado / Vencido con y sin saldo / Por vencer / Activo) |
+| `src/utils/__tests__/calendar.test.ts` | Grilla del `DateField`: `toDateKey` en hora local, `addDays`/`addMonths` cruzando mes y año, `buildMonthGrid` (42 días, semanas en lunes, relleno del mes vecino), `isSameOrAfter` |
 | `src/utils/__tests__/jwt.test.ts` | Lectura de `exp`, margen de 60 s, tokens ilegibles, base64url no ASCII |
 | `src/api/__tests__/client.test.ts` | `apiFetch`: query, cabeceras, errores de Strapi, red, HTML (502), 200 no JSON, sesión vencida (sin red, 401, 403 "No autenticado", 403 normal, 401 sin token); parámetros de `listInvoices` y `listClients` (incluido que nunca filtre por `client`) |
 | `src/api/__tests__/billyConfiguration.test.ts` | Plantilla blocks ⇄ texto: ida y vuelta, texto de enlaces y listas (regresión), valores raros; `emptyTonos` |

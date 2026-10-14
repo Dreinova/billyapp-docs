@@ -12,7 +12,7 @@ BillyApp es el **cliente móvil (Android e iOS) de Billy**, el servicio de cobra
 
 La app **no envía cobros por sí misma**: el backend (Strapi) programa cada cobro y entrega la configuración a un servicio de envío externo. La app consulta los datos y edita esa configuración.
 
-:::danger Antes de publicar
+:::danger[Antes de publicar]
 La auditoría encontró problemas críticos en el backend y la web que afectan a la app: el código de recuperación de contraseña no se envía, la recarga de créditos no verifica el pago y la app no permite definir la fecha de inicio de los cobros. Ver [Pendientes](./pendientes.md#criticos).
 :::
 
@@ -46,7 +46,7 @@ Documentado a partir del código, que es la fuente de verdad, al 13 de octubre d
 | Repositorio | Ubicación | Versión revisada |
 |---|---|---|
 | App (`billy-app`) | `D:\NAS_DATA\Code\Personal\appsjdda\billy-app` | Rama `fix/pendientes-fase-1` |
-| Backend (`gcp-strapi-billy`) | `B:\repos\gcp-strapi-billy` | Strapi 5.33.4 |
+| Backend (`gcp-strapi-billy`) | `B:\repos\gcp-strapi-billy` | Strapi 5.33.4, rama `feat/credits-ledger-relations` |
 | Web (`Billy_v2`) | `D:\NAS_DATA\Code\Clientes\Oblicua\Billy_v2` | PHP |
 
 - <Badge tone="success" dot>Verificado en código</Badge> Lo que se describe sin advertencia sale de leer estos tres repositorios.

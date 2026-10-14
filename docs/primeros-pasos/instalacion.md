@@ -32,7 +32,7 @@ Archivos locales que **no** están en git:
 EXPO_PUBLIC_API_BASE_URL=https://<host-de-strapi>/api
 ```
 
-:::warning Por defecto apuntas a producción
+:::warning[Por defecto apuntas a producción]
 Sin `.env`, todas las lecturas **y escrituras** (perfil, configuración de cobranza, imágenes) van contra producción. Guardar una configuración también **reprograma los cobros reales** de esa cuenta ([Cobranza automática](../funcionalidades/cobranza-automatica.md#ejecucion)). Usa un Strapi de pruebas (`gcp-strapi-billy`, `npm run develop`).
 :::
 

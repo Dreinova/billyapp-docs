@@ -33,7 +33,7 @@ sequenceDiagram
 
 Reglas:
 
-- **Sin `start_date` o sin `frecuencia_cobros` no se programa nada** (el backend registra "Job no agendado"). La web pide la fecha ("¿Cuándo quieres realizar el próximo lote de cobros?"); **la app todavía no** (ver [Pendientes](../pendientes.md#funcionalidad)).
+- **Sin `start_date` o sin `frecuencia_cobros` no se programa nada** (el backend registra "Job no agendado"). La app muestra un aviso en Ajustes generales mientras falte alguno de los dos.
 - Es día de cobro cuando los días desde `start_date` son un múltiplo no negativo de `frecuencia_cobros`.
 - Como mucho un envío por configuración y día (marca en Redis durante 24 h).
 - Si `billy_active === false`, se omite. La app no expone este campo.
@@ -52,13 +52,16 @@ Pantalla `config/index.tsx`.
 | Campo | Atributo | Validación en la app | Uso en el backend |
 |---|---|---|---|
 | Correo remitente | `canal_correo` | Formato de correo | Enviado al servicio de envío |
+| Próximo lote de cobros | `start_date` (date) | Calendario propio, mínimo mañana (igual que el `min` del `<input type="date">` de la web) | Ancla del programador: `isBillingDay` cuenta los días desde acá |
 | Frecuencia de cobros (días) | `frecuencia_cobros` (string) | Solo dígitos | Intervalo del programador |
 | Link de pago | `link_pago` | — | Enviado al servicio de envío |
 | Link del Excel en Drive | `link_drive` | — | Enviado al servicio de envío |
 | Pruebas: correo, SMS, WhatsApp | `test_email`, `test_phone`, `test_whatsapp` | Formato del correo | Enviados al servicio de envío |
 | "La mayoría de mis clientes son empresas" | `client_type` | — | Enviado como booleano |
 
-Campos que existen en el backend y la app no edita: `start_date`, `billy_active`, `canal_sms`, `copymessage` (se envían al servicio) y `fee_collection` (no se envía).
+Mientras falte `start_date` o `frecuencia_cobros`, la pantalla muestra un `Banner` de advertencia ("Billy todavía no cobra solo"). El selector de fecha es un componente propio (`src/ui/DateField.tsx`, grilla en `src/utils/calendar.ts`), sin dependencias nativas nuevas — ver [Componentes](../interfaz/componentes.md#datefield).
+
+Campos que existen en el backend y la app no edita: `billy_active`, `canal_sms`, `copymessage` (se envían al servicio) y `fee_collection` (no se envía).
 
 ## Tonos y canales {/* #tonos */}
 
@@ -76,7 +79,7 @@ Pantalla `config/plantilla.tsx`. Strapi guarda `plantilla_correo` como *blocks*;
 - `blocksToPlainText`: un bloque por línea, recorre los nodos anidados (el texto de los enlaces se conserva) y pone cada ítem de lista en su propia línea.
 - `plainTextToBlocks`: cada línea pasa a un párrafo.
 
-:::warning Se pierde el formato enriquecido
+:::warning[Se pierde el formato enriquecido]
 Guardar desde la app convierte la plantilla en párrafos de texto: se pierden negritas, enlaces (queda su texto) y listas. La pantalla lo advierte.
 :::
 
@@ -96,7 +99,7 @@ Mismo formato y lista que el editor de la web (`Billy_v2/configuration.php`): **
 | `{invoice_amount}` | Valor |
 | `{current_date}` | Fecha actual |
 
-:::caution Plantillas guardadas con la versión anterior
+:::caution[Plantillas guardadas con la versión anterior]
 Hasta el commit `2bfc839`, la app insertaba `{{client_name}}` (dos llaves). Las plantillas guardadas así desde la app deben corregirse a mano. El reemplazo lo hace el servicio de envío, que está fuera de estos repositorios.
 :::
 

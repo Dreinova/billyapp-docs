@@ -33,7 +33,7 @@ Ambos listados usan `usePaginatedQuery` ([Datos y estado](../arquitectura/datos-
 | Mayor monto | `amount:desc`, `due_date:desc`, `id:desc` |
 | Más días en mora | `days_outstanding:desc`, `due_date:desc`, `id:desc` |
 
-:::info Por qué nunca se filtra por `client`
+:::info[Por qué nunca se filtra por `client`]
 El *ownership scoping* del backend (`src/utils/ownership.js`) mezcla su filtro de dueño en `ctx.query.filters` con un *spread* superficial: un filtro del cliente sobre la clave `client` quedaría sobrescrito. Las claves `number` y `etapa` no colisionan. Una prueba (`client.test.ts`) verifica que la app nunca envíe `filters[client]`.
 :::
 

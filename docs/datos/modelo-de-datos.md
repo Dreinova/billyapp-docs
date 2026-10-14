@@ -25,13 +25,13 @@ Tipos de relación tal como están declarados en los esquemas:
 
 ```mermaid
 erDiagram
-  BILLY_USER ||--|| PLAN : "plan (oneToOne)"
+  BILLY_USER ||--o{ CLIENT : "billy_user"
   BILLY_USER ||--|| BILLY_CONFIGURATION : "oneToOne"
-  CLIENT ||--|| BILLY_USER : "billy_user (oneToOne)"
+  PLAN ||--o{ BILLY_USER : "plan"
   CLIENT ||--o{ INVOICE : "invoices"
-  INVOICE ||--|| ETAPA : "etapa (oneToOne)"
+  ETAPA ||--o{ INVOICE : "etapa"
   INVOICE ||--o{ RECORD : "records"
-  RECORD ||--|| CHANNEL : "channel (oneToOne)"
+  CHANNEL ||--o{ RECORD : "channel"
   BILLY_USER ||--o{ RECORD : "records"
   BILLY_USER ||--o{ CREDIT : "credits"
   BILLY_USER ||--o{ PUSH_TOKEN : "push tokens"
@@ -64,6 +64,8 @@ erDiagram
   }
   CREDIT {
     integer amount
+    integer used
+    enum source
     date expiration_date
     boolean status
   }
@@ -74,8 +76,8 @@ erDiagram
   }
 ```
 
-:::warning Relaciones declaradas `oneToOne`
-`invoice.etapa`, `record.channel`, `client.billy_user` y `billy_user.plan` son `oneToOne`, pero el dominio es muchos-a-uno: muchas facturas comparten una etapa, muchos *records* un canal, un usuario tiene muchos deudores y un plan, muchos usuarios. Los datos actuales funcionan (probablemente se crean con `strapi.db.query`), pero conectar estas relaciones con el servicio de documentos o desde el panel puede desconectar la relación anterior del mismo destino. Conviene migrarlas a `manyToOne` ([Pendientes](../pendientes.md#criticos)).
+:::info[Relaciones corregidas a `manyToOne`]
+`invoice.etapa`, `record.channel`, `client.billy_user` y `billy_user.plan` estaban declaradas `oneToOne` pese a ser muchos-a-uno (muchas facturas comparten una etapa, muchos *records* un canal, un usuario tiene muchos deudores, muchos usuarios comparten un plan). Se corrigieron a `manyToOne` en `gcp-strapi-billy` (commit `d389e97`). El cambio se verificó contra una copia de la base de desarrollo: la tabla de relación (mismo nombre, mismas columnas en ambos tipos porque ninguna de las cuatro usaba `useJoinTable: false`) conserva sus filas byte a byte al reiniciar Strapi con el esquema nuevo — no debería perderse ninguna relación existente. Conviene igual una corrida de verificación contra una copia de Postgres de *staging* antes de desplegar a producción, ya que el *diffing* de esquema de Strapi se comporta distinto según el motor.
 :::
 
 ## Entidades
@@ -125,9 +127,20 @@ Componente `Tono`: `active`, `canales { email, sms, whatsapp }`, `filters`, `not
 
 Un mensaje de cobro enviado: `date` (**date**), `message`, `cm_id`, `invoice`, `channel`, `billy_user`. Los crea el flujo de envío (rutas masivas `create-bulk-entries` y otras).
 
-### credit
+### credit {/* #credit */}
 
-`amount` (integer), `expiration_date` (date) y `status` (`false` = **agotado**, lo pone `useCredits`). Ver [Cuenta y plan](../funcionalidades/cuenta-y-plan.md#mi-plan).
+Lote de créditos (libro de créditos, `gcp-strapi-billy` commit `d389e97`):
+
+| Atributo | Tipo | Notas |
+|---|---|---|
+| `amount` | integer | Total acreditado en el lote |
+| `used` | integer, por defecto 0 | Mensajes ya consumidos; disponible = `amount − used` |
+| `source` | enum: `purchase` \| `gift` \| `adjustment` \| `migration` | Por defecto `purchase` |
+| `expiration_date` | date | — |
+| `status` | boolean, por defecto `true` | `false` = ya no usable: agotado (`used = amount`) o vencido (job `credits-expire`) |
+| `billy_user` | relación `manyToOne` | — |
+
+Detalle funcional en [Cuenta y plan](../funcionalidades/cuenta-y-plan.md#libro-de-creditos).
 
 ### otp · push-token · cron-log
 

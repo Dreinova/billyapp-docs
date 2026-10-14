@@ -83,9 +83,22 @@ Base de todo lo presionable: escala a `scaleTo` (0,98) en 120 ms y aplica `press
 | `minHeight`, `multiline` | Multilínea con alto mínimo 120 |
 | `editable={false}` | Fondo `surfaceMuted`, texto `textTertiary` |
 
-:::note Sin estado de foco
+:::note[Sin estado de foco]
 `TextField` no cambia el borde al enfocarse: el estado de foco anterior causaba un error y se quitó a propósito. El foco lo indican el cursor y el teclado del sistema.
 :::
+
+### `DateField` {/* #datefield */}
+
+Selector de fecha propio, sin dependencias nativas (nada de `@react-native-community/datetimepicker`): un campo con ícono de calendario que, al tocarlo, abre un `Sheet` con una grilla mensual.
+
+| Prop | Tipo | Notas |
+|---|---|---|
+| `value` | `string \| null` | `"YYYY-MM-DD"`, el mismo formato que los campos `date` de Strapi |
+| `onChange` | `(value: string) => void` | Se llama y el sheet se cierra al tocar un día habilitado |
+| `minDate` | `string` | Por defecto, mañana (igual que el `min` del `<input type="date">` de la web) |
+| `label`, `helper`, `error`, `disabled` | — | Mismo patrón que `TextField` |
+
+La grilla (`src/utils/calendar.ts`: `buildMonthGrid`, `addMonths`, `toDateKey`, `isSameOrAfter`) es lógica pura, probada con Jest sin montar nada de React Native — siempre 42 celdas (6 semanas), semanas de lunes a domingo, para que el alto no cambie al navegar entre meses. Único uso hoy: `start_date` en [Ajustes generales](../funcionalidades/cobranza-automatica.md#ajustes-generales).
 
 ### `SearchField`
 

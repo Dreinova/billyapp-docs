@@ -12,11 +12,11 @@ sidebar_label: Módulos
 | `types.ts` | `StrapiMeta`, `StrapiListResponse<T>`, `Channel`, `Etapa`, `Client`, `Invoice`, `CollectionRecord` | Tipos compartidos |
 | `auth.ts` | `BillyUser`, `toSessionUser`, `login`, `register`, `sendOtp`, `verifyOtp` (sin uso), `resetPassword` | Autenticación |
 | `billyUser.ts` | `BillyUserProfile`, `getMe`, `updateMe` | Perfil y plan |
-| `billyConfiguration.ts` | `BillyConfiguration`, `Tono`, `Tonos`, `Canales`, `MediaFile`, `getMyConfig`, `createConfig`, `updateConfig`, `emptyTonos`, `blocksToPlainText`, `plainTextToBlocks` | Configuración de cobranza |
+| `billyConfiguration.ts` | `BillyConfiguration` (incluye `start_date`), `Tono`, `Tonos`, `Canales`, `MediaFile`, `getMyConfig`, `createConfig`, `updateConfig`, `emptyTonos`, `blocksToPlainText`, `plainTextToBlocks` | Configuración de cobranza |
 | `clients.ts` | `listClients`, `getClient`, `CLIENTS_PAGE_SIZE` | Deudores paginados |
 | `invoices.ts` | `listInvoices`, `countInvoices`, `listEtapas`, `getInvoice`, `InvoiceFilters`, `InvoiceSort`, `INVOICES_PAGE_SIZE` | Facturas paginadas y etapas |
 | `records.ts` | `listRecords`, `countRecords`, `getDashboardCounts` | Cobros enviados |
-| `credits.ts` | `Credit`, `listCredits` | Créditos |
+| `credits.ts` | `Credit` (con `used`, `source`), `CreditSource`, `listCredits` | Créditos — libro de lotes del backend |
 | `faqs.ts` | `Faq`, `listFaqs` | Preguntas frecuentes |
 | `pushTokens.ts` | `registerPushToken`, `unregisterPushToken` | Push |
 | `upload.ts` | `UploadedFile`, `uploadFile` | Subida multipart |
@@ -34,16 +34,17 @@ sidebar_label: Módulos
 
 | Archivo | Exporta | Descripción |
 |---|---|---|
-| `format.ts` | `parseDate`, `formatDate`, `formatShortDate`, `formatRelativeDay`, `formatLongToday`, `daysUntil`, `formatCurrency`, `formatNumber`, `pluralize`, `initials`, `firstName`, `normalizeSearch`, `isValidEmail` | [Utilidades](./utilidades.md) |
+| `format.ts` | `parseDate`, `formatDate`, `formatShortDate`, `formatRelativeDay`, `formatLongToday`, `daysUntil`, `formatCurrency`, `formatNumber`, `pluralize`, `initials`, `firstName`, `normalizeSearch`, `isValidEmail`, `FULL_MONTHS`, `WEEKDAY_NAMES` | [Utilidades](./utilidades.md) |
+| `calendar.ts` | `toDateKey`, `todayKey`, `addDays`, `addMonths`, `buildMonthGrid`, `isSameOrAfter`, `keyToDate`, `CalendarCell` | Grilla pura del selector de fecha (`DateField`) |
 | `jwt.ts` | `getTokenExpiry`, `isTokenExpired` | Lectura del `exp` sin verificar la firma |
 | `invoices.ts` | `dueLabel` | Texto de vencimiento |
-| `credits.ts` | `creditState`, `EXPIRING_SOON_DAYS` | Estado de un lote de créditos |
+| `credits.ts` | `creditState`, `availableOf`, `EXPIRING_SOON_DAYS` | Estado y disponible de un lote de créditos |
 | `authUtils.ts` | `saveSession`, `getSession`, `clearSession`, `checkBiometricSupport`, `handleBioAuth` (→ `boolean`), `saveUserData`, `getUserData`, `deleteUserData` | SecureStore y biometría |
 | `pushNotifications.ts` | `registerForPushNotificationsAsync` | Permiso y `ExpoPushToken` |
 
 ## `src/ui`
 
-`index.ts` reexporta los tokens de `theme.ts` y los componentes: `Text`, `PressableScale`, `Button`, `IconButton`, `TextField`, `SearchField`, `Chip`, `ChipRow`, `ToggleChip`, `ToggleChipGroup`, `Badge`, `toneColors`, `Switch`, `Checkbox`, `Avatar`, `IconTile`, `Card`, `ListGroup`, `ListItem`, `KeyValueRow`, `SectionHeader`, `ProgressBar`, `Divider`, `Skeleton`, `SkeletonList`, `LoadingView`, `EmptyState`, `ErrorState`, `Banner`, `LoadMoreFooter`, `Screen`, `LargeHeader`, `NavHeader`, `ToastProvider`, `useToast`, `Sheet`, `ConfirmSheet`. Ver [Componentes](../interfaz/componentes.md).
+`index.ts` reexporta los tokens de `theme.ts` y los componentes: `Text`, `PressableScale`, `Button`, `IconButton`, `TextField`, `DateField`, `SearchField`, `Chip`, `ChipRow`, `ToggleChip`, `ToggleChipGroup`, `Badge`, `toneColors`, `Switch`, `Checkbox`, `Avatar`, `IconTile`, `Card`, `ListGroup`, `ListItem`, `KeyValueRow`, `SectionHeader`, `ProgressBar`, `Divider`, `Skeleton`, `SkeletonList`, `LoadingView`, `EmptyState`, `ErrorState`, `Banner`, `LoadMoreFooter`, `Screen`, `LargeHeader`, `NavHeader`, `ToastProvider`, `useToast`, `Sheet`, `ConfirmSheet`. Ver [Componentes](../interfaz/componentes.md).
 
 ## `src/components`
 

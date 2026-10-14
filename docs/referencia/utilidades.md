@@ -18,7 +18,7 @@ Todas están cubiertas por pruebas Jest que corren con `TZ=America/Bogota` ([Cal
 
 `parseDate(iso)` es la base de todas: interpreta `"YYYY-MM-DD"` (campos `date` de Strapi como `due_date` y `expiration_date`) como **medianoche local**. Los *datetime* con hora se parsean normalmente.
 
-:::info Por qué existe `parseDate`
+:::info[Por qué existe `parseDate`]
 `new Date("2026-08-18")` es medianoche UTC, que en Colombia es el 17 a las 19:00. Antes, la app mostraba esas fechas un día antes. Lo cubre una prueba de regresión.
 :::
 

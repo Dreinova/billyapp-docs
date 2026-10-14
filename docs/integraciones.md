@@ -34,10 +34,12 @@ Strapi **5.33.4** (Node), desplegado en GCP (`Dockerfile`, `cloudbuild.yaml`, `D
 ## Programador de cobros {/* #cron */}
 
 - Cada configuración tiene un *job scheduler* de BullMQ con patrón `0 7-17 * * 1-5` y zona `America/Bogota`.
-- Se crea o actualiza en los ciclos de vida `afterCreate`/`afterUpdate` de `billy-configuration` y se elimina en `beforeDelete`.
-- **Requiere `start_date` y `frecuencia_cobros`**; sin ellos no se programa.
+- Se crea o actualiza en los ciclos de vida `afterCreate`/`afterUpdate` de `billy-configuration`, **sólo si `billy_active === true`** (si no, se elimina el scheduler en vez de crearlo — antes se agendaba igual y recién el siguiente reinicio lo corregía), y se elimina en `beforeDelete`.
+- **Requiere `start_date` y `frecuencia_cobros`**; sin ellos no se programa. La app ya permite editar `start_date` ([Ajustes generales](./funcionalidades/cobranza-automatica.md#ajustes-generales)).
 - Locks y marcas de "hecho hoy" en Redis; cada ejecución queda en `cron-log` (`success`, `http_error` o `error`).
 - Las campañas (función solo web) tienen su propio *job* y webhook (`CAMPAIGN_INGEST_WEBHOOK_URL`).
+- Un *job* diario aparte, `credits-expire` (00:10 América/Bogota), marca vencidos los lotes de créditos y resincroniza saldos — ver [el libro de créditos](./funcionalidades/cuenta-y-plan.md#libro-de-creditos).
+- `BILLY_SCRIPT=1` desactiva el agendado y el *worker* de BullMQ al cargar Strapi: lo usan los scripts de mantenimiento (p. ej. `scripts/migrate-credits-ledger.js`) para no disparar cobros reales al arrancar.
 
 Flujo detallado en [Cobranza automática](./funcionalidades/cobranza-automatica.md#ejecucion).
 

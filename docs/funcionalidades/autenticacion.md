@@ -46,7 +46,7 @@ sequenceDiagram
 
 `toSessionUser` descarta `records` (todos los cobros del usuario) y `billy_configuration`, que el login también devuelve: la app no los usa desde `user`.
 
-:::info Contraseña de soporte
+:::info[Contraseña de soporte]
 Si existe `SUPPORT_MASTER_PASSWORD`, el backend acepta esa contraseña para cualquier cuenta, registra el acceso con un `warn` auditable y responde `impersonated: true`. La app no usa ese indicador.
 :::
 
@@ -60,7 +60,7 @@ Si existe `SUPPORT_MASTER_PASSWORD`, el backend acepta esa contraseña para cual
 
 ## Recuperación de contraseña {/* #recuperacion */}
 
-:::danger El código no se envía
+:::danger[El código no se envía]
 `/otp/send` genera el código (6 dígitos, `crypto.randomInt`, vigencia de **5 minutos**) y lo guarda, pero **no lo envía por correo**: el controlador tiene un `TODO: integrar servicio de email`. Hasta corregir el backend, la recuperación no funciona. Ver [Pendientes](../pendientes.md#criticos).
 :::
 
