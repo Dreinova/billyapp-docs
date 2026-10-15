@@ -7,8 +7,21 @@ const sidebars: SidebarsConfig = {
     'intro',
     {
       type: 'category',
-      label: 'Primeros pasos',
+      label: 'Guía para usuarios',
       collapsed: false,
+      items: [
+        'guia-de-usuario/bienvenida',
+        'guia-de-usuario/crear-cuenta-e-ingresar',
+        'guia-de-usuario/pantalla-de-inicio',
+        'guia-de-usuario/facturas-y-deudores',
+        'guia-de-usuario/configurar-cobros-automaticos',
+        'guia-de-usuario/mi-cuenta-y-plan',
+        'guia-de-usuario/preguntas-frecuentes',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Primeros pasos (desarrollo)',
       items: ['primeros-pasos/instalacion', 'primeros-pasos/configuracion'],
     },
     {

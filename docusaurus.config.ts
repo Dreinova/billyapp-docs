@@ -88,6 +88,7 @@ const config: Config = {
           position: 'left',
           label: 'Documentación',
         },
+        {to: '/docs/guia-de-usuario/bienvenida', label: 'Guía para usuarios', position: 'left'},
         {to: '/docs/arquitectura/vision-general', label: 'Arquitectura', position: 'left'},
         {to: '/docs/datos/api-backend', label: 'API', position: 'left'},
         {to: '/docs/pendientes', label: 'Pendientes', position: 'left'},
@@ -102,7 +103,16 @@ const config: Config = {
       style: 'light',
       links: [
         {
-          title: 'Empezar',
+          title: 'Guía para usuarios',
+          items: [
+            {label: 'Bienvenida', to: '/docs/guia-de-usuario/bienvenida'},
+            {label: 'Crear cuenta e ingresar', to: '/docs/guia-de-usuario/crear-cuenta-e-ingresar'},
+            {label: 'Configurar la cobranza', to: '/docs/guia-de-usuario/configurar-cobros-automaticos'},
+            {label: 'Preguntas frecuentes', to: '/docs/guia-de-usuario/preguntas-frecuentes'},
+          ],
+        },
+        {
+          title: 'Empezar (desarrollo)',
           items: [
             {label: 'Introducción', to: '/docs/intro'},
             {label: 'Instalación', to: '/docs/primeros-pasos/instalacion'},

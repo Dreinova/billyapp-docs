@@ -12,6 +12,10 @@ BillyApp es el **cliente móvil (Android e iOS) de Billy**, el servicio de cobra
 
 La app **no envía cobros por sí misma**: el backend (Strapi) programa cada cobro y entrega la configuración a un servicio de envío externo. La app consulta los datos y edita esa configuración.
 
+:::info[¿Buscas cómo usar la app, no cómo está construida?]
+Esta sección y las siguientes son documentación técnica, para quien desarrolla o mantiene BillyApp. Si lo que necesitas es una guía sin tecnicismos para usar la app, ve a la [Guía para usuarios](./guia-de-usuario/bienvenida.mdx).
+:::
+
 :::danger[Antes de publicar]
 La auditoría encontró problemas críticos en el backend y la web que afectan a la app: el código de recuperación de contraseña no se envía, la recarga de créditos no verifica el pago y la app no permite definir la fecha de inicio de los cobros. Ver [Pendientes](./pendientes.md#criticos).
 :::
